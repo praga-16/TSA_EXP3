@@ -16,6 +16,7 @@ type to fit the data.
 PRAGATHEESVARAN A B
 212221240039
 ```
+```
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
