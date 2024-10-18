@@ -1,5 +1,5 @@
 # Ex.No: 03   COMPUTE THE AUTO FUNCTION(ACF)
-#### Date: 30.09.2024
+#### Date: 
 
 
 ### AIM:
@@ -19,36 +19,33 @@ PRAGATHEESVARAN A B
 ```
 import numpy as np
 import pandas as pd
-import statsmodels.api as sm
 import matplotlib.pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf
 
-data = [3, 16, 156, 47, 246, 176, 233, 140, 130, 101, 166, 201, 200, 116, 118, 247, 209, 52, 153, 232, 128, 27, 192, 168, 208, 187, 228, 86, 30, 151, 18, 254, 76, 112, 67, 244, 179, 150, 89, 49, 83, 147, 90, 33, 6, 158, 80, 35, 186, 127]
+# Load the dataset
+file_path = 'Gold Price Prediction.csv'  # Replace with your actual file path
+data = pd.read_csv(file_path)
 
-# Mean
-data_mean = np.mean(data)
+# Convert 'Date' to datetime format
+data['Date'] = pd.to_datetime(data['Date'], format='%m/%d/%y')
+data.set_index('Date', inplace=True)
 
-# Variance
-data_var = np.var(data)
+# Use the 'Price Today' or any other relevant column for ACF calculation
+price_today = data['Price Today']
 
-# Normalized data
-normalized_data = (data - data_mean) / np.sqrt(data_var)
-
-# Compute the autocorrelation function (ACF)
-acf_result = np.correlate(normalized_data, normalized_data, mode='full')
-
-# Take only the positive lags
-acf_result = acf_result[len(acf_result)//2:]
-
-# Plot the ACF
-plt.figure(figsize=(10, 5))
-plt.stem(acf_result[:36], use_line_collection=True)
-plt.xlabel('Lag')
-plt.ylabel('Autocorrelation')
-plt.title('Autocorrelation Function (ACF)')
+# Compute and plot ACF for the first 35 lags
+plt.figure(figsize=(10, 6))
+plot_acf(price_today, lags=35, alpha=0.05)  # ACF with 35 lags and confidence intervals
+plt.title('AutoCorrelation Function (ACF) for Gold Price')
+plt.xlabel('Lags')
+plt.ylabel('ACF Value')
+plt.grid(True)
 plt.show()
+
 ```
 ### OUTPUT:
-![time5](https://github.com/Vishwarathinam/TSA_EXP3/assets/95266350/47c5b475-dd4e-4162-9c3b-ff740838078c)
+![image](https://github.com/user-attachments/assets/a8d6126d-b625-4645-ab0b-b83c94ba39b8)
+
 
 
 ### RESULT:
